@@ -1,0 +1,132 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Bootstrap demo</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
+    <link rel="stylesheet" href="board.css">
+</head>
+
+<body>
+    <div class="container mt-4">
+        <h2 class="mb-4">게시글 등록</h2>
+        <form class="postform">
+            <div class="mb-3">
+                <label for="title" class="form-label">제목 <span class="text-danger">*</span></label>
+                <input type="text" class="form-control" id="titleInput" placeholder="제목을 입력해주세요." required>
+            </div>
+            <div class="mb-3">
+                <label for="author" class="form-label">글쓴이 <span class="text-danger">*</span></label>
+                <input type="text" class="form-control" id="authorInput" placeholder="글쓴이를 입력해주세요." required>
+            </div>
+            <div class="mb-3">
+                <label for="category" class="form-label">카테고리 <span class="text-danger">*</span></label>
+                <select class="form-select" id="categorySelect" required>
+                    <option selected disabled value="">카테고리를 선택해주세요</option>
+                    <option value="기획">기획</option>
+                    <option value="요구사항 분석">요구사항 분석</option>
+                    <option value="화면설계">화면설계</option>
+                    <option value="DB설계">DB설계</option>
+                    <option value="테스트">테스트</option>
+                    <option value="배포">배포</option>
+                </select>
+            </div>
+            <div class="mb-3">
+                <label for="content" class="form-label">내용 <span class="text-danger">*</span></label>
+                <textarea class="form-control" id="contentInput" rows="5" placeholder="내용을 입력해주세요." required></textarea>
+            </div>
+            <div class="mb-3">
+                <label for="file" class="form-label">첨부파일</label>
+                <input class="form-control" type="file" id="file">
+            </div>
+
+            <!--========================== 등록,취소 Div ========================== -->
+            <div class="submitDiv">
+                <button type="submit" class="btn btn-primary me-3">등록</button>
+                <button type="button" class="btn btn-danger" onclick="window.location.href='home.html';">취소</button>
+            </div>
+        </form>
+    </div>
+
+    <!--============================= Scirpt ============================== -->
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"
+        integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+    <script>
+        // 제목,글쓴이,카테고리,내용 입력안할시 경고표시
+        $('#titleInput').on('invalid',function(){
+            if (this.value === "") {
+                this.setCustomValidity("제목을 입력하세요.");
+            } else {
+                this.setCustomValidity("");
+            }
+        })
+        $('#authorInput').on('invalid',function(){
+            if (this.value === "") {
+                this.setCustomValidity("글쓴이를 입력하세요.");
+            } else {
+                this.setCustomValidity("");
+            }
+        })
+        $('#categorySelect').on('invalid',function(){
+            if (this.value === "") {
+                this.setCustomValidity("카테고리를 선택하세요.");
+            } else {
+                this.setCustomValidity("");
+            }
+        })
+        $('#contentInput').on('invalid',function(){
+            if (this.value === "") {
+                this.setCustomValidity("내용을 입력하세요.");
+            } else {
+                this.setCustomValidity("");
+            }
+        })
+        $('#titleInput, #authorInput, #categorySelect, #contentInput').on('input', function() {
+            this.setCustomValidity("");
+        });
+
+        // 등록 버튼 클릭 시 데이터 저장
+        $('form').on('submit', function(e) {
+            e.preventDefault();
+
+            const title = $('#titleInput').val();
+            const author = $('#authorInput').val();
+            const category = $('#categorySelect').val();
+            const content = $('#contentInput').val();
+            const fileInput = $('#file')[0].files[0]; // 파일 정보 가져오기
+            const attachmentUrl = fileInput ? URL.createObjectURL(fileInput) : null;
+            const date = new Date().toISOString().split('T')[0]; // 오늘 날짜
+
+            // 로컬스토리지에서 기존 게시글 데이터 가져오기
+            let posts = JSON.parse(localStorage.getItem('posts')) || [];
+
+            // 새로운 게시글 데이터 생성
+            const newPost = {
+                no: posts.length + 1,
+                title: title,
+                author: author,
+                category: category,
+                date: date,
+                content: content,
+                attachment: attachmentUrl // 파일 URL 저장
+            };
+
+            // 기존 데이터에 새로운 게시글 추가
+            posts.push(newPost);
+
+            // 로컬스토리지에 업데이트
+            localStorage.setItem('posts', JSON.stringify(posts));
+
+            // 홈으로 이동
+            window.location.href = 'home.html';
+        });
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</body>
+
+</html>

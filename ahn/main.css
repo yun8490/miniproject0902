@@ -1,0 +1,87 @@
+/* 기본 라이트 모드 스타일 */
+body.light-mode {
+    background-color: white;
+    color: black;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+/* 다크 모드 스타일 */
+body.dark-mode {
+    background-color: #121212;
+    color: #e0e0e0;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.navbar.light-mode {
+    background-color: #f8f9fa;
+    color: black;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.navbar.dark-mode {
+    background-color: #333;
+    color: white;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.section-title.light-mode {
+    margin: 20px 0;
+    color: black;
+    transition: color 0.3s, margin 0.3s;
+}
+
+.section-title.dark-mode {
+    margin: 20px 0;
+    color: #e0e0e0;
+    transition: color 0.3s, margin 0.3s;
+}
+
+.section-content.light-mode {
+    background-color: white;
+    color: black;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.section-content.dark-mode {
+    background-color: #333;
+    color: #e0e0e0;
+    transition: background-color 0.3s, color 0.3s;
+    border-radius: 8px;
+    padding: 10px;
+}
+
+.badge-toggle {
+    cursor: pointer;
+    padding: 10px 20px;
+    border-radius: 5px;
+    transition: background-color 0.3s, color 0.3s;
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    z-index: 1000;
+}
+
+.badge-toggle.dark-mode {
+    background-color: black;
+    color: white;
+}
+
+.badge-toggle.light-mode {
+    background-color: white;
+    color: black;
+}
+
+.badge-toggle:hover {
+    background-color: #98FB98;
+    color: black;
+}
+
+.container.light-mode hr {
+    border-color: #ccc;
+    transition: border-color 0.3s;
+}
+
+.container.dark-mode hr {
+    border-color: #555;
+    transition: border-color 0.3s;
+}
